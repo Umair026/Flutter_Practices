@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/ui/home/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -207,6 +208,23 @@ class _MyHomePageState extends State<MyHomePage> {
                                   const SnackBar(
                                       content: Text('Processing Data')),
                                 );
+
+                                /*
+                                * Navigate to Home page
+                                * Material Page navigation enabled and back button shown to Appbar
+                                * */
+                                /*Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => HomePage()),);*/
+
+                                /*
+                                * below code
+                                *
+                                * Navigate to HomePage and put it top of the stack
+                                * Back button disabled and back stack cleared
+                                *
+                                * */
+                                Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(builder: (context) => HomePage()), (r) => false);
                               }
                             },
                             child: Text('Login'),
