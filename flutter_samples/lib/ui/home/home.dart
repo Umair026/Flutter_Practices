@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/ui/details/DetailPage.dart';
+import 'package:flutter_samples/ui/home/MyDrawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class HomePageState extends State<HomePage> {
           "Home Page",
         ),
       ),
+      drawer: MyDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,3 +39,5 @@ class HomePageState extends State<HomePage> {
     );
   }
 }
+
+

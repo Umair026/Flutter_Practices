@@ -78,7 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      title: Text("Forgot password ?", style: TextStyle(fontWeight: FontWeight.bold),),
+      title: Text(
+        "Forgot password ?",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       content: Text(
           "Please Contact your admin to change password.\n\nEmail to admin@example.com."),
       actions: [
@@ -106,7 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Center( child: Text(widget.title, ),),
+        title: Center(
+          child: Text(
+            widget.title,
+          ),
+        ),
       ),
       body: Center(
           // Center is a layout widget. It takes a single child and positions it
@@ -154,9 +161,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                       return null;
                     },
-
-                    onChanged: (text){
-                      if (text.isNotEmpty && _loginFormKey.currentState!.validate()) {
+                    onChanged: (text) {
+                      if (text.isNotEmpty &&
+                          _loginFormKey.currentState!.validate()) {
                         _loginFormKey.currentState!.validate();
                       }
                     },
@@ -175,8 +182,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                       return null;
                     },
-                    onChanged: (text){
-                      if (text.isNotEmpty && _loginFormKey.currentState!.validate()) {
+                    onChanged: (text) {
+                      if (text.isNotEmpty &&
+                          _loginFormKey.currentState!.validate()) {
                         _loginFormKey.currentState!.validate();
                       }
                     },
@@ -223,8 +231,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 * Back button disabled and back stack cleared
                                 *
                                 * */
-                                Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(builder: (context) => HomePage()), (r) => false);
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage()),
+                                    (r) => false);
                               }
                             },
                             child: Text('Login'),
