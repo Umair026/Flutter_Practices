@@ -4,6 +4,9 @@ void main() {
   runApp(const MyApp());
 }
 
+// link
+// https://docs.flutter.dev/cookbook/forms/validation
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -50,6 +53,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  final _loginFormKey = GlobalKey<FormState>();
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -61,6 +66,33 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void showAlert(BuildContext context) {
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      title: Text("Forgot password ?", style: TextStyle(fontWeight: FontWeight.bold),),
+      content: Text(
+          "Please Contact your admin to change password.\n\nEmail to admin@example.com."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -70,109 +102,137 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        body: Center(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Center( child: Text(widget.title, ),),
+      ),
+      body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
           child: Container(
-            width: 300,
+        width: 300,
+        child: Form(
+            key: _loginFormKey,
             child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Invoke "debug painting" (press "p" in the console, choose the
-            // "Toggle Debug Paint" action from the Flutter Inspector in Android
-            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-            // to see the wireframe for each widget.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    child: Text(
+                      'Login',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 30.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: "Email address or username",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length < 5) {
+                        return "Please enter email address or username";
+                      }
+                      return null;
+                    },
 
-              Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  child: Text(
-                    'Login',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline5,
+                    onChanged: (text){
+                      if (text.isNotEmpty && _loginFormKey.currentState!.validate()) {
+                        _loginFormKey.currentState!.validate();
+                      }
+                    },
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 30.0),
-                child: TextField(
-                  decoration: const InputDecoration(
-                    labelText: "Email address or username",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 10.0),
-                child: TextField(
-                  decoration: const InputDecoration(
-                    labelText: "Cell number",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
+                Container(
                   margin: EdgeInsets.only(top: 10.0),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text('forgot password ?'),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: "Cell number",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length < 11) {
+                        return 'Please enter cell number';
+                      }
+                      return null;
+                    },
+                    onChanged: (text){
+                      if (text.isNotEmpty && _loginFormKey.currentState!.validate()) {
+                        _loginFormKey.currentState!.validate();
+                      }
+                    },
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 30.0),
-                child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                        margin: EdgeInsets.only(top: 10.0),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Login'),
-                        )),
-                    Container(
-                        margin: EdgeInsets.only(top: 10.0, left: 10.0),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Sign up'),
-                        )),
-                  ],
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 10.0),
+                    child: TextButton(
+                      onPressed: () {
+                        showAlert(context);
+                      },
+                      child: Text('forgot password ?'),
+                    ),
+                  ),
                 ),
-              )
+                Container(
+                  margin: EdgeInsets.only(top: 30.0),
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                          margin: EdgeInsets.only(top: 10.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_loginFormKey.currentState!.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Processing Data')),
+                                );
+                              }
+                            },
+                            child: Text('Login'),
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(top: 10.0, left: 10.0),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Text('Sign up'),
+                          )),
+                    ],
+                  ),
+                )
 
-              /*Text(
+                /*Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),*/
-            ],
-          ),
-
-
-        )),
-    floatingActionButton: FloatingActionButton(
-    onPressed: () {}, //_incrementCounter,
-    tooltip: 'Increment',
-    child: const Icon(Icons.add),
-    ), // This trailing comma makes auto-formatting nicer for build methods.
+              ],
+            )),
+      )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {}, //_incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
